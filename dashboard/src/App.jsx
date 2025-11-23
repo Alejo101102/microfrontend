@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
+import "./dashboard.css"
+
 // 📊 Datos simulados del dashboard
 const ANNOUNCEMENTS = [
   {
@@ -141,12 +143,12 @@ export default function App(){
   }
 
   return (
-    <div>
-      <div className="mb-6">
-        <h2 className="text-3xl font-bold mb-2">
+    <div className="dashboard-root">
+      <div className="dashboard-header">
+        <h2 className="greeting-title">
           {getGreeting()}{profileData ? `, ${profileData.name.split(' ')[0]}` : ''}
         </h2>
-        <p className="text-slate-600">
+        <p className="current-date">
           {currentTime.toLocaleDateString('en-US', { 
             weekday: 'long', 
             year: 'numeric', 
@@ -158,68 +160,60 @@ export default function App(){
       
       {/* Banner de bienvenida personalizado */}
       {profileData && (
-        <div className={`mb-6 p-4 rounded-lg transition-all ${
-          isNewUpdate 
-            ? 'bg-green-100 border border-green-400 text-green-700 animate-pulse' 
-            : 'bg-gradient-to-r from-indigo-50 to-blue-50 border border-indigo-200 text-indigo-700'
-        }`}>
-          <p className="font-semibold">
+        <div className={isNewUpdate ? 'welcome-banner updated' : 'welcome-banner'}>
+          <p className="banner-title">
             {isNewUpdate ? '✅ Profile Updated!' : '👋 Welcome back!'}
           </p>
-          <p className="text-sm mt-1">
+          <p className="banner-info">
             {profileData.name} • {profileData.email}
           </p>
         </div>
       )}
 
       {/* Quick Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-        <div className="p-4 bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-xl shadow">
-          <div className="text-3xl mb-2">📚</div>
-          <div className="text-2xl font-bold">6</div>
-          <div className="text-sm opacity-90">Active Courses</div>
+      <div className="stats-grid">
+        <div className="stat-card stat-blue">
+          <div className="stat-icon">📚</div>
+          <div className="stat-number">6</div>
+          <div className="stat-label">Active Courses</div>
         </div>
         
-        <div className="p-4 bg-gradient-to-br from-green-500 to-green-600 text-white rounded-xl shadow">
-          <div className="text-3xl mb-2">📝</div>
-          <div className="text-2xl font-bold">3</div>
-          <div className="text-sm opacity-90">Upcoming Exams</div>
+        <div className="stat-card stat-green">
+          <div className="stat-icon">📝</div>
+          <div className="stat-number">3</div>
+          <div className="stat-label">Upcoming Exams</div>
         </div>
         
-        <div className="p-4 bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-xl shadow">
-          <div className="text-3xl mb-2">🎯</div>
-          <div className="text-2xl font-bold">85%</div>
-          <div className="text-sm opacity-90">Average Grade</div>
+        <div className="stat-card stat-purple">
+          <div className="stat-icon">🎯</div>
+          <div className="stat-number">85%</div>
+          <div className="stat-label">Average Grade</div>
         </div>
       </div>
       
       {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="content-grid">
         {/* Announcements */}
         <div>
-          <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+          <h3 className="section-title">
             📢 Announcements
           </h3>
-          <div className="space-y-3">
+          <div className="cards-list">
             {ANNOUNCEMENTS.map(announcement => (
               <div 
                 key={announcement.id}
-                className={`p-4 rounded-xl shadow border-l-4 ${
-                  announcement.priority === 'high' 
-                    ? 'bg-red-50 border-red-500' 
-                    : 'bg-white border-blue-500'
-                }`}
+                className={announcement.priority === 'high' ? 'announcement-card high-priority' : 'announcement-card'}
               >
-                <div className="flex justify-between items-start mb-2">
-                  <h4 className="font-semibold">{announcement.title}</h4>
+                <div className="announcement-header">
+                  <h4 className="announcement-title">{announcement.title}</h4>
                   {announcement.priority === 'high' && (
-                    <span className="text-xs bg-red-500 text-white px-2 py-1 rounded">
+                    <span className="priority-badge">
                       Important
                     </span>
                   )}
                 </div>
-                <p className="text-sm text-slate-600 mb-2">{announcement.message}</p>
-                <p className="text-xs text-slate-500">
+                <p className="announcement-message">{announcement.message}</p>
+                <p className="announcement-date">
                   {new Date(announcement.date).toLocaleDateString('en-US', { 
                     month: 'short', 
                     day: 'numeric' 
@@ -232,22 +226,22 @@ export default function App(){
 
         {/* Upcoming Exams */}
         <div>
-          <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+          <h3 className="section-title">
             📝 Upcoming Exams
           </h3>
-          <div className="space-y-3">
+          <div className="cards-list">
             {UPCOMING_EXAMS.map(exam => (
-              <div key={exam.id} className="p-4 bg-white rounded-xl shadow">
-                <div className="flex justify-between items-start mb-2">
+              <div key={exam.id} className="exam-card">
+                <div className="exam-header">
                   <div>
-                    <span className="text-xs font-mono text-slate-500">{exam.code}</span>
-                    <h4 className="font-semibold">{exam.course}</h4>
+                    <span className="exam-code">{exam.code}</span>
+                    <h4 className="exam-title">{exam.course}</h4>
                   </div>
-                  <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded">
+                  <span className="exam-type-badge">
                     {exam.type}
                   </span>
                 </div>
-                <div className="space-y-1 text-sm text-slate-600">
+                <div className="exam-details">
                   <p>📅 {formatDate(exam.date)} • {exam.time}</p>
                   <p>📍 {exam.room}</p>
                 </div>
@@ -258,24 +252,24 @@ export default function App(){
       </div>
 
       {/* Events */}
-      <div className="mt-6">
-        <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+      <div className="events-section">
+        <h3 className="section-title">
           🎉 Upcoming Events
         </h3>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="events-grid">
           {EVENTS.map(event => (
-            <div key={event.id} className="p-4 bg-white rounded-xl shadow hover:shadow-lg transition-shadow">
-              <h4 className="font-semibold mb-2">{event.title}</h4>
-              <div className="space-y-1 text-sm text-slate-600 mb-3">
+            <div key={event.id} className="event-card">
+              <h4 className="event-title">{event.title}</h4>
+              <div className="event-details">
                 <p>📅 {formatDate(event.date)}</p>
                 <p>🕐 {event.time}</p>
                 <p>📍 {event.location}</p>
               </div>
-              <div className="flex flex-wrap gap-1">
+              <div className="event-tags">
                 {event.tags.map((tag, idx) => (
                   <span 
                     key={idx}
-                    className="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded"
+                    className="event-tag"
                   >
                     {tag}
                   </span>

@@ -1,0 +1,138 @@
+/* CSS SOLO para el Shell - NO afecta módulos remotos */
+
+/* Contenedor principal del Shell */
+.shell-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f8fafc;
+}
+
+/* Barra de navegación - SOLO para el Shell */
+.shell-container > .nav {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 16px 24px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
+  border-bottom: 1px solid rgba(2, 6, 23, 0.03);
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+}
+
+/* Logo/Título principal */
+.shell-container .nav-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #4f46e5;
+  margin: 0;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* Enlaces de navegación */
+.shell-container .nav-link {
+  text-decoration: none;
+  color: #64748b;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  position: relative;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+.shell-container .nav-link:hover {
+  color: #4f46e5;
+  background: rgba(79, 70, 229, 0.06);
+}
+
+.shell-container .nav-link.active {
+  color: #4f46e5;
+  background: rgba(79, 70, 229, 0.08);
+}
+
+/* Contenedor principal del contenido */
+.shell-container > .main {
+  flex: 1;
+  width: 100%;
+  min-height: calc(100vh - 72px);
+  background: #f8fafc;
+}
+
+/* Estado de carga */
+.shell-container .loading-message {
+  color: #64748b;
+  font-size: 1.1rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 300px;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+.shell-container .loading-message::before {
+  content: "";
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(79, 70, 229, 0.2);
+  border-top-color: #4f46e5;
+  border-radius: 50%;
+  animation: shell-spin 0.8s linear infinite;
+}
+
+@keyframes shell-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .shell-container > .nav {
+    padding: 14px 20px;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .shell-container .nav-title {
+    font-size: 1.3rem;
+    width: 100%;
+    margin-bottom: 4px;
+  }
+
+  .shell-container .nav-link {
+    font-size: 0.9rem;
+    padding: 6px 14px;
+  }
+}
+
+@media (max-width: 520px) {
+  .shell-container > .nav {
+    padding: 12px 16px;
+    gap: 12px;
+  }
+
+  .shell-container .nav-title {
+    font-size: 1.2rem;
+  }
+
+  .shell-container .nav-link {
+    font-size: 0.85rem;
+    padding: 6px 12px;
+  }
+
+  .shell-container .loading-message {
+    font-size: 1rem;
+  }
+}
