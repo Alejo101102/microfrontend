@@ -103,17 +103,17 @@ Open **4 separate terminal windows** and run:
 ```bash
 # Terminal 1 - Dashboard
 cd dashboard
-npm run dev
+npm run preview
 # Runs on http://localhost:5174
 
 # Terminal 2 - Courses
 cd courses
-npm run dev
+npm run preview
 # Runs on http://localhost:5175
 
 # Terminal 3 - Profile
 cd profile
-npm run dev
+npm run preview
 # Runs on http://localhost:5176
 
 # Terminal 4 - Container (Host Application)
